@@ -19,6 +19,8 @@ $(function () {
         if (response.code == 200) {
           $("#myModal").modal("show");
           $(".modal-body").text("密码正确!");
+          localStorage.setItem("token", response.token);
+
           $("#myModal").on("hidden.bs.modal", function (e) {
             window.location.href = "./index.html";
           });
