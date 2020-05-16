@@ -4,11 +4,12 @@ $(function () {
     var username = $(".input_txt").val();
     var password = $(".input_pass").val();
     if ($.trim(username) == "" || $.trim(password) == "") {
-      alert("输入的账号密码不能为空");
+      $("#myModal").modal("show");
+      $(".modal-body").text("请确认账号密码是否为空...");
     }
     $.ajax({
       type: "post",
-      url: "http://localhost:8080/api/v1/admin/user/login",
+      url: BigNew.user_login,
       data: {
         username,
         password,
@@ -16,9 +17,14 @@ $(function () {
       dataType: "json",
       success: function (response) {
         if (response.code == 200) {
-          window.location.href = "./index.html";
+          $("#myModal").modal("show");
+          $(".modal-body").text("密码正确!");
+          $("#myModal").on("hidden.bs.modal", function (e) {
+            window.location.href = "./index.html";
+          });
         } else {
-          alert(response.msg);
+          $("#myModal").modal("show");
+          $(".modal-body").text("请确输入的认账号密码是否正确.....");
         }
       },
     });
